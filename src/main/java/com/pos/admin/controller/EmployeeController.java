@@ -32,13 +32,11 @@ public class EmployeeController {
 	
 	@GetMapping("/employee")
 	public ResponseEntity<List<Employee>> getAllEmployee(){
-  //FOR TESTING PURPOSE
 		return new ResponseEntity<>(employeeService.getAllEmployee(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
 	@GetMapping("/employee/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
-		System.out.println("hello");
 		return new ResponseEntity<>(employeeService.getEmployeeById(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
