@@ -20,5 +20,5 @@ public interface EmployeeDao extends JpaRepository<Employee,Long> {
 	
 	@Query("FROM Employee e WHERE  e.phoneNumber=:phone AND e.id!=:id")
 	public Optional<Employee> getEmployeeByPhoneUpdate(@Param("phone") String phone,@Param("id") Long id);
-	
+      	
 }
