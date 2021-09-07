@@ -32,7 +32,7 @@ public class EmployeeController {
 	
 	@GetMapping("/employee")
 	public ResponseEntity<List<Employee>> getAllEmployee(){
-
+  //FOR TESTING PURPOSE
 		return new ResponseEntity<>(employeeService.getAllEmployee(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
