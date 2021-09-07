@@ -32,7 +32,7 @@ public class EmployeeController {
 	
 	@GetMapping("/employee")
 	public ResponseEntity<List<Employee>> getAllEmployee(){
-
+  //FOR TESTING PURPOSE
 		return new ResponseEntity<>(employeeService.getAllEmployee(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
@@ -45,7 +45,7 @@ public class EmployeeController {
 	
 	@PostMapping("/employee")
 	public ResponseEntity<String> addEmployee(@RequestBody Employee employee){
-		System.out.println("test1");
+		
 		return new ResponseEntity<>(employeeService.addEmployee(employee),new HttpHeaders(),HttpStatus.OK);
 	}
 	
@@ -57,7 +57,7 @@ public class EmployeeController {
 	
 	@DeleteMapping("/employee/{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
-		System.out.println("test2");
+		
 		return new ResponseEntity<>(employeeService.deleteEmployee(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
