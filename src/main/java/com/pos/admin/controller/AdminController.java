@@ -17,53 +17,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pos.admin.entity.Employee;
+import com.pos.admin.entity.Admin;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
-import com.pos.admin.service.EmployeeService;
+import com.pos.admin.service.AdminService;
+
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin("http:localhost:4200/")
-public class EmployeeController {
-	
+@RequestMapping(value="/api")
+//@CrossOrigin("http:localhost:4200/")
+public class AdminController {
 	@Autowired
-	private EmployeeService employeeService;
+	private AdminService adminService;
 	
-	@GetMapping("/employee")
-	public ResponseEntity<List<Employee>> getAllEmployee(){
-		return new ResponseEntity<>(employeeService.getAllEmployee(),new HttpHeaders(),HttpStatus.OK);
+	@GetMapping("/admin")
+	public ResponseEntity<List<Admin>> getAllAdmin(){
+  //FOR TESTING PURPOSE
+		return new ResponseEntity<>(adminService.getAllAdmin(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@GetMapping("/employee/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
-<<<<<<< HEAD
+	@GetMapping("/admin/{id}")
+	public ResponseEntity<Admin> getAdminById(@PathVariable Long id){
 		
-=======
->>>>>>> 11d29db3fefc1abd28647a181b58723f37c75e32
-		return new ResponseEntity<>(employeeService.getEmployeeById(id),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.getAdminById(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
 	
-	@PostMapping("/employee")
-	public ResponseEntity<String> addEmployee(@RequestBody Employee employee){
+	@PostMapping("/admin")
+	public ResponseEntity<String> addAdmin(@RequestBody Admin admin){
 		
-		return new ResponseEntity<>(employeeService.addEmployee(employee),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.addAdmin(admin),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PutMapping("/employee/{id}")
-	public ResponseEntity<String> updateEmployee(@PathVariable Long id, @RequestBody Employee employee){
+	@PutMapping("/admin/{id}")
+	public ResponseEntity<String> updateAdmin(@PathVariable Long id, @RequestBody Admin admin){
 		
-		return new ResponseEntity<>(employeeService.updateEmployee(id,employee),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.updateAdmin(id,admin),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/employee/{id}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
+	@DeleteMapping("/admin/{id}")
+	public ResponseEntity<String> deleteAdmin(@PathVariable Long id){
 		
-		return new ResponseEntity<>(employeeService.deleteEmployee(id),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.deleteAdmin(id),new HttpHeaders(),HttpStatus.OK);
 	}
-	
-	
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<String> userNotFound(IdNotFoundException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -73,5 +69,5 @@ public class EmployeeController {
 	public ResponseEntity<String> duplicateIdFound(DuplicateIdException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
-
+	
 }

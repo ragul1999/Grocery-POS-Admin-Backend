@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pos.admin.entity.Category;
-import com.pos.admin.entity.Employee;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
 import com.pos.admin.service.CategoryService;
