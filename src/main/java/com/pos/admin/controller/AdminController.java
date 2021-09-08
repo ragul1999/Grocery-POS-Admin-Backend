@@ -17,57 +17,57 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pos.admin.entity.Product;
+import com.pos.admin.entity.Admin;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
-import com.pos.admin.service.ProductService;
+import com.pos.admin.service.AdminService;
+
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin("http:localhost:4200/")
-public class ProductController {
-
+@RequestMapping(value="/api")
+//@CrossOrigin("http:localhost:4200/")
+public class AdminController {
 	@Autowired
-	private ProductService productService;
+	private AdminService adminService;
 	
-	@GetMapping("/product")
-	public ResponseEntity<List<Product>> getAllProduct(){
-		return new ResponseEntity<>(productService.getAllProduct(),new HttpHeaders(),HttpStatus.OK);
+	@GetMapping("/admin")
+	public ResponseEntity<List<Admin>> getAllAdmin(){
+  //FOR TESTING PURPOSE
+		return new ResponseEntity<>(adminService.getAllAdmin(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@GetMapping("/product/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable Long id){
-		return new ResponseEntity<>(productService.getProductById(id),new HttpHeaders(),HttpStatus.OK);
-	}
-	
-	@PostMapping("/category/{id}/product")
-	public ResponseEntity<String> addProduct(@PathVariable Long id,@RequestBody Product product){
+	@GetMapping("/admin/{id}")
+	public ResponseEntity<Admin> getAdminById(@PathVariable Long id){
 		
-		return new ResponseEntity<>(productService.addProduct(id,product),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.getAdminById(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PutMapping("/category/{cid}/product/{pid}")
-	public ResponseEntity<String> updateEmployee(@PathVariable("cid") Long cid, @PathVariable("pid") Long pid,@RequestBody Product product){
+	
+	@PostMapping("/admin")
+	public ResponseEntity<String> addAdmin(@RequestBody Admin admin){
 		
-		return new ResponseEntity<>(productService.updateProduct(cid,pid, product),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.addAdmin(admin),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/category/{cid}/product/{pid}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable("cid") Long cid,@PathVariable("pid") Long pid){
+	@PutMapping("/admin/{id}")
+	public ResponseEntity<String> updateAdmin(@PathVariable Long id, @RequestBody Admin admin){
 		
-		return new ResponseEntity<>(productService.deleteProduct(cid, pid),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(adminService.updateAdmin(id,admin),new HttpHeaders(),HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/admin/{id}")
+	public ResponseEntity<String> deleteAdmin(@PathVariable Long id){
+		
+		return new ResponseEntity<>(adminService.deleteAdmin(id),new HttpHeaders(),HttpStatus.OK);
+	}
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<String> userNotFound(IdNotFoundException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
-
 	
 	@ExceptionHandler(DuplicateIdException.class)
 	public ResponseEntity<String> duplicateIdFound(DuplicateIdException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
-
 	
 }
