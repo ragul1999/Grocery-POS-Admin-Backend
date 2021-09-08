@@ -22,7 +22,7 @@ import lombok.*;
 @AllArgsConstructor(access  = AccessLevel.PROTECTED)
 @ToString
 @Entity
-public class vendor {
+public class Vendor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
