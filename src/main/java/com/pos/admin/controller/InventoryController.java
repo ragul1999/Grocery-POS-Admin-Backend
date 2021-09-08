@@ -17,45 +17,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pos.admin.entity.Product;
+import com.pos.admin.entity.Inventory;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
-import com.pos.admin.service.ProductService;
+import com.pos.admin.service.InventoryService;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http:localhost:4200/")
-public class ProductController {
+public class InventoryController {
 
 	@Autowired
-	private ProductService productService;
+	private InventoryService inventoryService;
 	
-	@GetMapping("/product")
-	public ResponseEntity<List<Product>> getAllProduct(){
-		return new ResponseEntity<>(productService.getAllProduct(),new HttpHeaders(),HttpStatus.OK);
+	@GetMapping("/inventory")
+	public ResponseEntity<List<Inventory>> getAllInventory(){
+		return new ResponseEntity<>(inventoryService.getAllInventory(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@GetMapping("/product/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable Long id){
-		return new ResponseEntity<>(productService.getProductById(id),new HttpHeaders(),HttpStatus.OK);
+	@GetMapping("/inventory/{id}")
+	public ResponseEntity<Inventory> getInventoryById(@PathVariable Long id){
+		return new ResponseEntity<>(inventoryService.getInventoryById(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PostMapping("/category/{id}/product")
-	public ResponseEntity<String> addProduct(@PathVariable Long id,@RequestBody Product product){
+	@PostMapping("/product/{id}/vendor/{vid}/inventory")
+	public ResponseEntity<String> addInventory(@PathVariable("id") Long productId, @PathVariable("vid") Long vendorId,@RequestBody Inventory inventory){
 		
-		return new ResponseEntity<>(productService.addProduct(id,product),new HttpHeaders(),HttpStatus.OK);
+		inventory.setAddedDate();
+		return new ResponseEntity<>(inventoryService.addInventory(productId, vendorId, inventory),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PutMapping("/category/{cid}/product/{pid}")
-	public ResponseEntity<String> updateEmployee(@PathVariable("cid") Long cid, @PathVariable("pid") Long pid,@RequestBody Product product){
+	@PutMapping("/inventory/{id}")
+	public ResponseEntity<String> updateEmployee(@PathVariable("id") Long id,@RequestBody Inventory inventory){
 		
-		return new ResponseEntity<>(productService.updateProduct(cid,pid, product),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(inventoryService.updateInventory(id, inventory),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/category/{cid}/product/{pid}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable("cid") Long cid,@PathVariable("pid") Long pid){
+	@DeleteMapping("/inventory/{id}")
+	public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long id){
 		
-		return new ResponseEntity<>(productService.deleteProduct(cid, pid),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(inventoryService.deleteInventory(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(IdNotFoundException.class)
@@ -67,4 +68,5 @@ public class ProductController {
 	public ResponseEntity<String> duplicateIdFound(DuplicateIdException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
+
 }

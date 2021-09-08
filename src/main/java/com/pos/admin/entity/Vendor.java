@@ -1,8 +1,6 @@
 package com.pos.admin.entity;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,8 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
 
@@ -22,7 +21,7 @@ import lombok.*;
 @AllArgsConstructor(access  = AccessLevel.PROTECTED)
 @ToString
 @Entity
-public class vendor {
+public class Vendor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +39,10 @@ public class vendor {
 	
 	@Column(nullable=false)
 	private String company;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "vendor",cascade = CascadeType.ALL)
+    private Set<Inventory> iventory;
 	
 	public String getEmail() {
 		return email;

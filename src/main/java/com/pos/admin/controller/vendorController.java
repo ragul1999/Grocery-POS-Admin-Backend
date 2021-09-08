@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.pos.admin.service.vendorService;
-import com.pos.admin.entity.vendor;
+import com.pos.admin.entity.Vendor;
+import com.pos.admin.exception.DuplicateIdException;
+import com.pos.admin.exception.IdNotFoundException;
 
 import java.util.List;
 
@@ -25,15 +27,15 @@ public class vendorController {
 	   private vendorService vendorService;
 
     @PostMapping("/addVendor")
-    public vendor addVendor(@RequestBody vendor Vendor) {
+    public Vendor addVendor(@RequestBody Vendor Vendor) {
         return vendorService.addVendor(Vendor);
     }
     @GetMapping("/getVendor")
-    public List<vendor> getVendor() {
+    public List<Vendor> getVendor() {
         return vendorService.getVendor();
     }
     @GetMapping("/getVendor/{idVendor}")
-    public vendor getVendor(@PathVariable("idVendor") Long idVendor) {
+    public Vendor getVendor(@PathVariable("idVendor") Long idVendor) {
         return vendorService.getVendor(idVendor);
     }
     
@@ -41,5 +43,15 @@ public class vendorController {
 public String deleteVendor(@PathVariable Long id){
 		
 		return vendorService.deleteEmployee(id);
+	}
+    
+    @ExceptionHandler(IdNotFoundException.class)
+	public ResponseEntity<String> userNotFound(IdNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DuplicateIdException.class)
+	public ResponseEntity<String> duplicateIdFound(DuplicateIdException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
 }
