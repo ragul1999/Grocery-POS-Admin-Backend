@@ -8,5 +8,4 @@ import com.pos.admin.entity.Product;
 public interface ProductDao extends JpaRepository<Product,Long>{
 
 	
-	
 }

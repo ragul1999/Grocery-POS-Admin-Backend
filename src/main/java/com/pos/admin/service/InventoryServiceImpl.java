@@ -1,5 +1,6 @@
 package com.pos.admin.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pos.admin.dao.vendorDao;
+import com.pos.admin.dao.VendorDao;
 import com.pos.admin.dao.InventoryDao;
 import com.pos.admin.dao.ProductDao;
 import com.pos.admin.entity.Inventory;
@@ -29,7 +30,7 @@ public class InventoryServiceImpl implements InventoryService {
 	private ProductDao productDao;
 	
 	@Autowired
-	private vendorDao vendorDao;
+	private VendorDao vendorDao;
 	
 	@Autowired
 	private InventoryDao inventoryDao;
@@ -68,6 +69,9 @@ public class InventoryServiceImpl implements InventoryService {
     	} else {
     		Product product = productDao.getById(productId);
     		inventory.setProduct(product);
+    		/*if(product.getMrp()<inventory.getPurchasedPrice()) {
+    			
+    		}*/
     	}
 		
 		if(!vendorDao.existsById(vendorId)) {
@@ -96,6 +100,42 @@ public class InventoryServiceImpl implements InventoryService {
 	public List<Inventory> getAllInventory() {
 		
 		return inventoryDao.findAll();
+	}
+
+	@Override
+	public List<Inventory> getInventoryByName(String name) {
+		
+		return inventoryDao.getInventoryByName(name);
+	}
+
+	@Override
+	public List<Inventory> getInventoryByQuantity(Integer quantity) {
+		
+		return inventoryDao.getInventoryByQuantity(quantity);
+	}
+
+	@Override
+	public List<Inventory> getInventoryByPrice(Double startPrice, Double endPrice) {
+		
+		return inventoryDao.getInventoryByPrice(startPrice, endPrice);
+	}
+
+	@Override
+	public List<Inventory> getInventoryFromLowPrice() {
+		
+		return inventoryDao.getInventoryFromLowPrice();
+	}
+
+	@Override
+	public List<Inventory> getInventoryFromHighPrice() {
+		
+		return inventoryDao.getInventoryFromHighPrice();
+	}
+
+	@Override
+	public List<Inventory> getInventoryByDate(LocalDate startDate, LocalDate endDate) {
+		
+		return inventoryDao.getInventoryByDate(startDate, endDate);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.pos.admin.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,44 @@ public class InventoryController {
 		
 		inventory.setAddedDate();
 		return new ResponseEntity<>(inventoryService.addInventory(productId, vendorId, inventory),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/inventory/name/{name}")
+	public ResponseEntity<List<Inventory>> getInventoryByName(@PathVariable("name") String name) {
+		
+		return new ResponseEntity<>(inventoryService.getInventoryByName(name),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/inventory/quantity/{quant}")
+	public ResponseEntity<List<Inventory>> getInventoryByQuantity(@PathVariable("quant") Integer quantity) {
+		
+		return new ResponseEntity<>(inventoryService.getInventoryByQuantity(quantity),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/inventory/price/{start}/{end}")
+	public ResponseEntity<List<Inventory>> getInventoryByPrice(@PathVariable("start") Double start, @PathVariable("end") Double end) {
+		
+		return new ResponseEntity<>(inventoryService.getInventoryByPrice(start, end),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/inventory/date/{start}/{end}")
+	public ResponseEntity<List<Inventory>> getInventoryByDate(@PathVariable("start") String start, @PathVariable("end") String end) {
+		
+		LocalDate startDate = LocalDate.parse(start);
+		LocalDate endDate = LocalDate.parse(end);
+		return new ResponseEntity<>(inventoryService.getInventoryByDate(startDate, endDate),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/inventory/lowprice")
+	public ResponseEntity<List<Inventory>> getInventoryByLowPrice() {
+		
+		return new ResponseEntity<>(inventoryService.getInventoryFromLowPrice(),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/inventory/highprice")
+	public ResponseEntity<List<Inventory>> getInventoryByHighPrice() {
+		
+		return new ResponseEntity<>(inventoryService.getInventoryFromHighPrice(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
 	@PutMapping("/inventory/{id}")
