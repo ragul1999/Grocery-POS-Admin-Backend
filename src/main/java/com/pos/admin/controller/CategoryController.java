@@ -17,52 +17,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pos.admin.entity.Employee;
+import com.pos.admin.entity.Category;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
-import com.pos.admin.service.EmployeeService;
+import com.pos.admin.service.CategoryService;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http:localhost:4200/")
-public class EmployeeController {
+public class CategoryController {
 	
 	@Autowired
-	private EmployeeService employeeService;
+	private CategoryService categoryService;
 	
-	@GetMapping("/employee")
-	public ResponseEntity<List<Employee>> getAllEmployee(){
-		return new ResponseEntity<>(employeeService.getAllEmployee(),new HttpHeaders(),HttpStatus.OK);
+	@GetMapping("/category")
+	public ResponseEntity<List<Category>> getAllCategory(){
+		return new ResponseEntity<>(categoryService.getAllCategory(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@GetMapping("/employee/{id}")
-	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
-<<<<<<< HEAD
+	@GetMapping("/category/{id}")
+	public ResponseEntity<Category> getCategorynyId(@PathVariable Long id){
+		return new ResponseEntity<>(categoryService.getCategorynyId(id),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@PostMapping("/category")
+	public ResponseEntity<String> addCategory(@RequestBody Category category){
+		return new ResponseEntity<>(categoryService.addCategory(category),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@PutMapping("/category/{id}")
+	public ResponseEntity<String> updateCategory(@PathVariable Long id, @RequestBody Category category){
+		return new ResponseEntity<>(categoryService.updateCategory(id,category),new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/category/{id}")
+	public ResponseEntity<String> deleteCategory(@PathVariable Long id){
 		
-=======
->>>>>>> 11d29db3fefc1abd28647a181b58723f37c75e32
-		return new ResponseEntity<>(employeeService.getEmployeeById(id),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(categoryService.deleteCategory(id),new HttpHeaders(),HttpStatus.OK);
 	}
-	
-	
-	@PostMapping("/employee")
-	public ResponseEntity<String> addEmployee(@RequestBody Employee employee){
-		
-		return new ResponseEntity<>(employeeService.addEmployee(employee),new HttpHeaders(),HttpStatus.OK);
-	}
-	
-	@PutMapping("/employee/{id}")
-	public ResponseEntity<String> updateEmployee(@PathVariable Long id, @RequestBody Employee employee){
-		
-		return new ResponseEntity<>(employeeService.updateEmployee(id,employee),new HttpHeaders(),HttpStatus.OK);
-	}
-	
-	@DeleteMapping("/employee/{id}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
-		
-		return new ResponseEntity<>(employeeService.deleteEmployee(id),new HttpHeaders(),HttpStatus.OK);
-	}
-	
 	
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<String> userNotFound(IdNotFoundException e) {
