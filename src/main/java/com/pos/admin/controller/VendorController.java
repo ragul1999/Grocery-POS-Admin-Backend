@@ -3,11 +3,9 @@ package com.pos.admin.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,10 +18,8 @@ import com.pos.admin.exception.IdNotFoundException;
 import java.util.List;
 
 @RequestMapping("/api")
-@ResponseBody
-@CrossOrigin(origins = "http://localhost:4200")
-@Controller
-@Scope("prototype")
+@CrossOrigin("http://localhost:4200")
+@RestController
 public class VendorController {
 
 	@Autowired
@@ -37,7 +33,7 @@ public class VendorController {
 	
 	@GetMapping("/vendor/{id}")
 	public ResponseEntity<Vendor> getVendorById(@PathVariable Long id){
-		System.out.println("hello");
+		
 		return new ResponseEntity<>(vendorService.getVendorById(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	

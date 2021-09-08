@@ -24,8 +24,8 @@ import com.pos.admin.service.AdminService;
 
 
 @RestController
-@RequestMapping(value="/api")
-//@CrossOrigin("http:localhost:4200/")
+@RequestMapping("/api")
+@CrossOrigin("http://localhost:4200")
 public class AdminController {
 	@Autowired
 	private AdminService adminService;

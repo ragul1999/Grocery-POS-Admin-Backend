@@ -24,7 +24,7 @@ import com.pos.admin.service.CategoryService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http:localhost:4200/")
+@CrossOrigin("http://localhost:4200")
 public class CategoryController {
 	
 	@Autowired
