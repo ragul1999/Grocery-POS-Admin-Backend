@@ -2,6 +2,7 @@ package com.pos.admin.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pos.admin.dao.CategoryDao;
 import com.pos.admin.dao.ProductDao;
+import com.pos.admin.entity.Category;
 import com.pos.admin.entity.Product;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
@@ -102,15 +104,16 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAllProduct() {
-		
 		return productDao.findAll();
-		
 	}
-	
-	
 
-	
-	
-	
+	@Override
+	public List<Product> getCategoryProducts(Long categoryId) {
+		Optional<Category> category=categoryDao.findById(categoryId);
+		if(category.isPresent())
+			return new ArrayList<>(category.get().getProduct());
+		else
+			throw new IdNotFoundException(ID_NOT_FOUND+ categoryId);
+	}
 	
 }
