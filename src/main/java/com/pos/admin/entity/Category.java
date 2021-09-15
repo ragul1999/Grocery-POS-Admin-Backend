@@ -14,14 +14,15 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="categories")
+@Table(name="category")
 public class Category {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="category_id",nullable=false)
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(name="category_name",nullable=false)
 	private String name;
 	
 	
@@ -52,7 +53,4 @@ public class Category {
 	public void setProduct(Set<Product> product) {
 		this.product = product;
 	}
-	
-	
-
 }
