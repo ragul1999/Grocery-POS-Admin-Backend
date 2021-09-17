@@ -6,11 +6,11 @@ import com.pos.admin.entity.Product;
 
 public interface ProductService {
 
-	public String deleteProduct(Long categoryId,Long id);
+	public String deleteProduct(Long id,Long categoryId);
 
-	public String updateProduct(Long categoryId,Long id, Product productUpdated);
+	public String updateProduct(Long id, Product productUpdated);
 
-	public String addProduct(Long categoryId,Product product);
+	public String addProduct(Product product);
 
 	public Product getProductById(Long id);
 
