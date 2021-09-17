@@ -49,7 +49,7 @@ public class Product {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
-    private Set<Inventory> iventory;
+    private Set<Inventory> inventory;
 
 	public Long getId() {
 		return id;

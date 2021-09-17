@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	@Override
-	public String deleteProduct(Long categoryId,Long id) {
+	public String deleteProduct(Long id,Long categoryId) {
 		
 		if(!categoryDao.existsById(categoryId)) {
     		throw new IdNotFoundException(CATEGORY_NOT_FOUND);
@@ -45,13 +45,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String updateProduct(Long categoryId,Long id, Product productUpdated) {
+	public String updateProduct(Long id, Product productUpdated) {
 		
-		if(!categoryDao.existsById(categoryId)) {
+		if(!categoryDao.existsById(productUpdated.getCategory().getId())) {
     		throw new IdNotFoundException(CATEGORY_NOT_FOUND);
     	}
 	
-		
 		return productDao.findById(id)
 				.map(product -> {
 					product.setName(productUpdated.getName());
@@ -61,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 					product.setBrand(productUpdated.getBrand());
 					product.setStock(productUpdated.getStock());
 					product.setTax(productUpdated.getTax());
+					product.setCategory(productUpdated.getCategory());
 					productDao.save(product);
 					return "Product updated successfully!";
 				}).orElseThrow(()-> new IdNotFoundException(COULDNT_UPDATE+ID_NOT_FOUND+ id));
@@ -72,15 +72,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String addProduct(Long categoryId,Product product) {
+	public String addProduct(Product product) {
 		
-		if(!categoryDao.existsById(categoryId)) {
+		if(!categoryDao.existsById(product.getCategory().getId())) {
     		throw new IdNotFoundException(CATEGORY_NOT_FOUND);
     	}
 		
 		
-		return categoryDao.findById(categoryId).map(category->{
-			product.setCategory(category);
+		return categoryDao.findById(product.getCategory().getId()).map(category->{
+			product.setCategory(product.getCategory());
 			productDao.save(product);
 			return "Product added successfully!";
 		}).orElseThrow(()->new DuplicateIdException("Couldn't add Product.."));

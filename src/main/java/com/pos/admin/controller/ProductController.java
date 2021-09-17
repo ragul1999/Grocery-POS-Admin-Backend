@@ -40,22 +40,22 @@ public class ProductController {
 		return new ResponseEntity<>(productService.getProductById(id),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PostMapping("/category/{id}/product")
-	public ResponseEntity<String> addProduct(@PathVariable Long id,@RequestBody Product product){
+	@PostMapping("/product")
+	public ResponseEntity<String> addProduct(@RequestBody Product product){
 		
-		return new ResponseEntity<>(productService.addProduct(id,product),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(productService.addProduct(product),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PutMapping("/category/{cid}/product/{pid}")
-	public ResponseEntity<String> updateEmployee(@PathVariable("cid") Long cid, @PathVariable("pid") Long pid,@RequestBody Product product){
+	@PutMapping("product/{pid}")
+	public ResponseEntity<String> updateEmployee(@PathVariable("pid") Long pid,@RequestBody Product product){
 		
-		return new ResponseEntity<>(productService.updateProduct(cid,pid, product),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(productService.updateProduct(pid, product),new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/category/{cid}/product/{pid}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable("cid") Long cid,@PathVariable("pid") Long pid){
+	@DeleteMapping("product/{pid}/category/{cid}")
+	public ResponseEntity<String> deleteEmployee(@PathVariable("pid") Long pid,@PathVariable("cid") Long cid){
 		
-		return new ResponseEntity<>(productService.deleteProduct(cid, pid),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(productService.deleteProduct(pid, cid),new HttpHeaders(),HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(IdNotFoundException.class)
