@@ -12,14 +12,9 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.*;
 
-@Data
-@Getter 
-@Setter
-@RequiredArgsConstructor(staticName  =  "of") 
-@AllArgsConstructor(access  = AccessLevel.PROTECTED)
-@ToString
+
+
 @Entity
 public class Vendor {
 	
@@ -43,6 +38,7 @@ public class Vendor {
 	@JsonIgnore
 	@OneToMany(mappedBy = "vendor",cascade = CascadeType.ALL)
     private Set<Inventory> iventory;
+	
 	
 	public String getEmail() {
 		return email;

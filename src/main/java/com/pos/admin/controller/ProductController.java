@@ -1,5 +1,7 @@
 package com.pos.admin.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,11 @@ public class ProductController {
 		ProductListDto productList=new ProductListDto();
 		productList.setProductList(productService.getAllProduct());
 		return new ResponseEntity<>(productList,new HttpHeaders(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/products")
+	public ResponseEntity<List<Product>> getAllProducts(){
+		return new ResponseEntity<>(productService.getAllProduct(),new HttpHeaders(),HttpStatus.OK);
 	}
 	
 	@GetMapping("/products/{category-id}")

@@ -1,11 +1,14 @@
 package com.pos.admin.controller;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +25,8 @@ import com.pos.admin.entity.Inventory;
 import com.pos.admin.exception.DuplicateIdException;
 import com.pos.admin.exception.IdNotFoundException;
 import com.pos.admin.service.InventoryService;
+import com.pos.admin.util.pdfreport.PDFGenerator;
+
 
 @RestController
 @RequestMapping("/api")
@@ -85,6 +90,23 @@ public class InventoryController {
 		
 		return new ResponseEntity<>(inventoryService.getInventoryFromHighPrice(),new HttpHeaders(),HttpStatus.OK);
 	}
+	
+	 @GetMapping(value = "/inventory/pdf",
+	            produces = MediaType.APPLICATION_PDF_VALUE)
+	    public ResponseEntity<InputStreamResource> inventoryReport()  {
+	        List<Inventory> inventories =  inventoryService.getAllInventory();
+
+	        ByteArrayInputStream bis = PDFGenerator.customerPDFReport(inventories);
+
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.add("Content-Disposition", "inline; filename=inventory.pdf");
+
+	        return ResponseEntity
+	                .ok()
+	                .headers(headers)
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(new InputStreamResource(bis));
+	    }
 	
 	@PutMapping("/inventory/{id}")
 	public ResponseEntity<String> updateEmployee(@PathVariable("id") Long id,@RequestBody Inventory inventory){

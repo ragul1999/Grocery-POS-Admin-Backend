@@ -44,7 +44,7 @@ public class EmployeeController {
 	@PostMapping("/employee")
 	public ResponseEntity<String> addEmployee(@RequestBody Employee employee){
 		
-		return new ResponseEntity<>(employeeService.addEmployee(employee),new HttpHeaders(),HttpStatus.OK);
+		return new ResponseEntity<>(employeeService.addEmployee(employee),new HttpHeaders(),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/employee/{id}")
@@ -67,7 +67,7 @@ public class EmployeeController {
 	
 	@ExceptionHandler(DuplicateIdException.class)
 	public ResponseEntity<String> duplicateIdFound(DuplicateIdException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 }
