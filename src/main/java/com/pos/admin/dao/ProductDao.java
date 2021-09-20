@@ -17,5 +17,10 @@ public interface ProductDao extends JpaRepository<Product,Long>{
 	@Query("update Product P set P.mrp=:updatedMrp,P.tax=:updatedTax where P.id=:id")
 	public Integer updateMrpAndTax(@Param("updatedMrp") Double mrp,@Param("updatedTax") Double tax,@Param("id") Long id);
 	
+	@Transactional
+	@Modifying
+	@Query("update Product P set P.stock=:updatedQuantity where P.id=:id")
+	public Integer updateQuantity(@Param("updatedQuantity") Integer quantity,@Param("id") Long id);	
+	
 	
 }

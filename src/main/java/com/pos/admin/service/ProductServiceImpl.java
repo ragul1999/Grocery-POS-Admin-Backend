@@ -58,10 +58,7 @@ public class ProductServiceImpl implements ProductService {
 					product.setName(productUpdated.getName());
 					product.setImage(productUpdated.getImage());
 					product.setDescription(productUpdated.getDescription());
-					product.setMrp(productUpdated.getMrp());
 					product.setBrand(productUpdated.getBrand());
-					product.setStock(productUpdated.getStock());
-					product.setTax(productUpdated.getTax());
 					product.setCategory(productUpdated.getCategory());
 					productDao.save(product);
 					return "Product updated successfully!";

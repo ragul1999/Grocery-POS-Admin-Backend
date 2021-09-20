@@ -52,11 +52,8 @@ public class InventoryServiceImpl implements InventoryService {
 		
 		return inventoryDao.findById(id)
 				.map(inventory -> {
-				inventory.setQuantity(inventoryUpdated.getQuantity());
 				inventory.setManufacturedDate(inventoryUpdated.getManufacturedDate());
-				inventory.setPurchasedPrice(inventoryUpdated.getPurchasedPrice());
 				inventory.setExpiryDate(inventoryUpdated.getExpiryDate());
-				inventory.setTax(inventoryUpdated.getTax());
 				inventoryDao.save(inventory);
 				return "Inventory updated successfully!";
 				}).orElseThrow(() -> new IdNotFoundException(COULDNT_UPDATE+ID_NOT_FOUND+ id)); 
@@ -66,6 +63,8 @@ public class InventoryServiceImpl implements InventoryService {
 	public String addInventory(Long productId, Long vendorId, Inventory inventory) {
 		
 		Integer stat=Integer.MIN_VALUE;
+		Integer stati=Integer.MIN_VALUE;
+		
 		
 		if(!vendorDao.existsById(vendorId)) {
     		throw new IdNotFoundException(VENDOR_NOT_FOUND);
@@ -83,9 +82,11 @@ public class InventoryServiceImpl implements InventoryService {
     		if(product.getMrp()<inventory.getPurchasedPrice()) {
     				stat=productDao.updateMrpAndTax(inventory.getPurchasedPrice(), inventory.getTax(), productId);
     		}
+    		int quant=inventory.getQuantity()+product.getStock();
+    		stati=productDao.updateQuantity(quant, productId);
     	}
 		
-		if(stat!=0) {
+		if(stat!=0 && stati!=0) {
 		inventoryDao.save(inventory);
 		return "Inventory added Successfully...:)";
 		}
