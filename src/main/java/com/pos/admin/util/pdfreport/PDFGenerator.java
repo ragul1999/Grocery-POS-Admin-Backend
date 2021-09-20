@@ -33,7 +33,7 @@ public class PDFGenerator {
         	
 			// Add Text to PDF file ->
 			Font font = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
-			Paragraph para = new Paragraph( "Inventory Table", font);
+			Paragraph para = new Paragraph( "Stock Report", font);
 			para.setAlignment(Element.ALIGN_CENTER);
 			document.add(para);
 			document.add(Chunk.NEWLINE);

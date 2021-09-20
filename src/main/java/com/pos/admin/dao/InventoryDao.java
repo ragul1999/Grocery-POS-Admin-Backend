@@ -13,7 +13,7 @@ import com.pos.admin.entity.Inventory;
 @Repository
 public interface InventoryDao extends JpaRepository<Inventory,Long> {
 
-	@Query("select i from Inventory as i where i.product.name=:productname")
+	@Query("select i from Inventory as i where i.product.name like %:productname%")
 	public List<Inventory> getInventoryByName(@Param("productname") String name);
 	
 	@Query("select i from Inventory as i where i.quantity=:quant")
